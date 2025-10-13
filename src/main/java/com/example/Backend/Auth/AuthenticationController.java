@@ -1,19 +1,11 @@
-package com.example.Backend.controller;
+package com.example.Backend.Auth;
 
-import com.example.Backend.Model.User;
-import com.example.Backend.Service.AuthenticationService;
-import com.example.Backend.Service.JwtService;
-import com.example.Backend.Validation.LoginUserDto;
-import com.example.Backend.Validation.RegisterUserDto;
-import com.example.Backend.Validation.VerifyUserDto;
-import com.example.Backend.responses.LoginResponse;
-import jakarta.servlet.Registration;
+import com.example.Backend.User.User;
+import com.example.Backend.dto.LoginUserDto;
+import com.example.Backend.dto.RegisterUserDto;
+import com.example.Backend.dto.VerifyUserDto;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor

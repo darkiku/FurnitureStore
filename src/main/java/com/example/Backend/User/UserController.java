@@ -1,9 +1,6 @@
-package com.example.Backend.controller;
+package com.example.Backend.User;
 
-import com.example.Backend.Model.User;
-import com.example.Backend.Service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

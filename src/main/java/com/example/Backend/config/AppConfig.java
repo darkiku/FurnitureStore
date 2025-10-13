@@ -1,10 +1,8 @@
 package com.example.Backend.config;
 
-import com.example.Backend.Repository.UserRepository;
-import jakarta.security.auth.message.config.AuthConfig;
+import com.example.Backend.User.UserRepository;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.security.AuthProvider;
 
 @Configuration
 @EnableAutoConfiguration

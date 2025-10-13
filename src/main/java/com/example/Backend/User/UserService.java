@@ -1,7 +1,5 @@
-package com.example.Backend.Service;
+package com.example.Backend.User;
 
-import com.example.Backend.Model.User;
-import com.example.Backend.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

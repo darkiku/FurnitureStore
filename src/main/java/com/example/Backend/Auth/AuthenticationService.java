@@ -1,13 +1,12 @@
-package com.example.Backend.Service;
+package com.example.Backend.Auth;
 
-import com.example.Backend.Model.User;
-import com.example.Backend.Repository.UserRepository;
-import com.example.Backend.Validation.LoginUserDto;
-import com.example.Backend.Validation.RegisterUserDto;
-import com.example.Backend.Validation.VerifyUserDto;
+import com.example.Backend.User.User;
+import com.example.Backend.User.UserRepository;
+import com.example.Backend.dto.LoginUserDto;
+import com.example.Backend.dto.RegisterUserDto;
+import com.example.Backend.dto.VerifyUserDto;
 import jakarta.mail.MessagingException;
 import lombok.Data;
-import org.springframework.mail.MailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

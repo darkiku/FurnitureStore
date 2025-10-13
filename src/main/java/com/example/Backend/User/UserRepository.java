@@ -1,6 +1,5 @@
-package com.example.Backend.Repository;
+package com.example.Backend.User;
 
-import com.example.Backend.Model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

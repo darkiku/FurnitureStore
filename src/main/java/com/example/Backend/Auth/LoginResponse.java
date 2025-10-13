@@ -1,4 +1,4 @@
-package com.example.Backend.responses;
+package com.example.Backend.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -21,11 +21,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(registeredUser.toString());
     }
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginUserDto loginUserDto) {
         User loginedUser = authenticationService.signIn(loginUserDto);
         String token = jwtService.generateToken(loginedUser);
         LoginResponse loginResponse = new LoginResponse(token, jwtService.getExpirationTime());
-        return ResponseEntity.ok(loginResponse.toString());
+        return ResponseEntity.ok(loginResponse);
     }
     @PostMapping("/verify")
     public ResponseEntity<String> verify(@RequestBody VerifyUserDto verifyUserDto) {

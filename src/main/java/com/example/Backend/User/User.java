@@ -1,5 +1,7 @@
 package com.example.Backend.User;
 
+import com.example.Backend.Cart.Cart;
+import com.example.Backend.Order.Order;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,8 @@ import java.util.List;
 @Table(name = "users")
 @Entity
 public class User implements UserDetails {
+    private String firstName;
+    private String lastName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +33,10 @@ public class User implements UserDetails {
     private String verificationCode;
     @Column(name = "verification_expiration")
     private LocalDateTime verificationExpireAtf;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Order> orders;
 
 
 

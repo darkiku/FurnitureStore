@@ -34,7 +34,7 @@ public class AuthenticationService {
     public User signIn(LoginUserDto input) {
         User user = userRepository.findByEmail(input.getEmail()).orElseThrow(()->new RuntimeException("User not found"));
         if (!user.isEnabled()){
-            new RuntimeException("Account not verified, pls verify account");
+            throw new RuntimeException("Account not verified, pls verify account");
         }
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword()));
         return user;
@@ -44,7 +44,7 @@ public class AuthenticationService {
         if (userOptional.isPresent()){
             User user = userOptional.get();
             if (user.getVerificationExpireAtf().isBefore(LocalDateTime.now())){
-                new RuntimeException("Code is expired");
+                throw new RuntimeException("Code is expired");
             }
             if (user.getVerificationExpireAtf().equals(input.getVerificationCode())){
                 user.setEnabled(true);
@@ -53,10 +53,10 @@ public class AuthenticationService {
                 userRepository.save(user);
             }
             else{
-                new RuntimeException("not valid verify code");
+                throw new RuntimeException("not valid verify code");
             }
         }else{
-            new RuntimeException("User not found");
+            throw new RuntimeException("User not found");
         }
     }
     public void resendVerificationEmail(String email) {
@@ -71,7 +71,7 @@ public class AuthenticationService {
             sendVerificationEmail(user);
             userRepository.save(user);
         } else {
-            new RuntimeException("User not found");
+            throw new RuntimeException("User not found");
         }
     }
     public void sendVerificationEmail(User user) {

@@ -1,6 +1,7 @@
 package com.example.Backend.Product;
 
 import com.example.Backend.Cart.Cart;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,11 +10,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@Table(name = "product")
 public class Product{
     @Column
     @NotNull
@@ -34,7 +38,9 @@ public class Product{
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "cart_product", joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id"))
+    @JsonIgnore
+    private List<Cart> carts;
 }

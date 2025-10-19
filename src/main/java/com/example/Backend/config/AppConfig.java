@@ -18,9 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Data
 public class AppConfig {
     private UserRepository userRepository;
+    public AppConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
+        return email -> userRepository.findByEmail(email)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
     @Bean

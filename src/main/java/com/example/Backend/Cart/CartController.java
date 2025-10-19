@@ -16,9 +16,9 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/showCart/{cartId}")
-    public ResponseEntity<List<Product>> showCart(@PathVariable Long cartId){
-        Cart cart = cartService.getCartById(cartId);
+    @GetMapping("/showCart/{id}")
+    public ResponseEntity<List<Product>> showCart(@PathVariable Long id){
+        Cart cart = cartService.getCartById(id);
         List<Product> products = cartService.getProductsFromCart(cart);
         return ResponseEntity.ok(products);
     }
@@ -29,15 +29,15 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cart);
     }
 
-    @DeleteMapping("/removeFromCart/{cartId}/{productId}")
-    public ResponseEntity<Void> removeFromCart(@PathVariable Long cartId, @PathVariable Long productId){
-        cartService.removeFromCart(cartId, productId);
+    @DeleteMapping("/removeFromCart/{id}/{productId}")
+    public ResponseEntity<Void> removeFromCart(@PathVariable Long id, @PathVariable Long productId){
+        cartService.removeFromCart(id, productId);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/clearCart/{cartId}")
-    public ResponseEntity<Void> clearCart(@PathVariable Long cartId){
-        cartService.clearCart(cartId);
+    @DeleteMapping("/clearCart/{id}")
+    public ResponseEntity<Void> clearCart(@PathVariable Long id){
+        cartService.clearCart(id);
         return ResponseEntity.noContent().build();
     }
 }

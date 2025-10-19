@@ -1,13 +1,13 @@
 package com.example.Backend.Auth;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginResponse {
     private String token;
     private long expiresIn;
-    }
+}

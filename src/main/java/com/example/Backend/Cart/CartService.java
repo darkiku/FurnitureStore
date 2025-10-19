@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -26,7 +27,8 @@ public class CartService {
     }
 
     public Cart addToCart(Long cartId, Long productId) {
-        Cart cart = getCartById(cartId);
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found with id: " + cartId));
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
@@ -34,26 +36,51 @@ public class CartService {
         if (products == null) {
             products = new ArrayList<>();
         }
-        products.add(product);
-        cart.setProducts(products);
-
-        return cartRepository.save(cart);
+        if (!products.contains(product)) {
+            products.add(product);
+        }
+        if (!product.getCarts().contains(cart)) {
+            product.getCarts().add(cart);
+        }
+        cart.setQuantity(products.size());
+        cart.setTotalPrice(calculateCartTotal(products));
+        cartRepository.save(cart);
+        productRepository.save(product);
+        return cart;
     }
 
-    public void removeFromCart(Long cartId, Long productId) {
-        Cart cart = getCartById(cartId);
+    public void removeFromCart(Long id, Long productId) {
+        Cart cart = getCartById(id);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
         List<Product> products = cart.getProducts();
         products.remove(product);
-        cart.setProducts(products);
+        product.getCarts().remove(cart);
+
+        cart.setQuantity(products.size());
+        cart.setTotalPrice(calculateCartTotal(products));
 
         cartRepository.save(cart);
+        productRepository.save(product);
+    }
+    public void clearCart(Long id) {
+        Cart cart = getCartById(id);
+        List<Product> products = cart.getProducts();
+        for (Product product : products) {
+            product.getCarts().remove(cart);
+            productRepository.save(product);
+        }products.clear();
+        cart.setQuantity(0);
+        cart.setTotalPrice(0.0);
+        cartRepository.save(cart);
+    }
+    private Double calculateCartTotal(List<Product> products) {
+        double total = 0.0;
+        for (Product product : products) {
+            total += Double.parseDouble(product.getPrice().toString());
+        }
+        return total;
     }
 
-    public void clearCart(Long cartId) {
-        Cart cart = getCartById(cartId);
-        cartRepository.delete(cart);
-    }
 }

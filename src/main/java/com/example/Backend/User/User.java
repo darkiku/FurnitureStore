@@ -2,6 +2,7 @@ package com.example.Backend.User;
 
 import com.example.Backend.Cart.Cart;
 import com.example.Backend.Order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,17 +26,21 @@ public class User implements UserDetails {
     @Column(unique = true,nullable = false)
     private  String username;
     @Column(nullable = false)
+    @JsonIgnore
     private  String password;
     @Column(unique = true,nullable = false)
     private String email;
     private boolean enabled;
+    @JsonIgnore
     @Column(name = "verification_code")
     private String verificationCode;
     @Column(name = "verification_expiration")
+    @JsonIgnore
     private LocalDateTime verificationExpireAtf;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Order> orders;
 
 
@@ -48,19 +53,23 @@ public class User implements UserDetails {
     public User(){}
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return UserDetails.super.isAccountNonLocked();
     }
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return UserDetails.super.isCredentialsNonExpired();
     }

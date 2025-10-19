@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
     @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;

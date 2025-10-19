@@ -18,8 +18,7 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    private UserService wuserService;
-    @GetMapping("/product{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<Product> getProduct(Long id) {
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(product);

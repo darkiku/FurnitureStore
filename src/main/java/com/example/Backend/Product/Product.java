@@ -1,8 +1,9 @@
 package com.example.Backend.Product;
 
 import com.example.Backend.Cart.Cart;
+import com.example.Backend.visitor.ProductVisitor;
+import com.example.Backend.visitor.Visitable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "product")
-public class Product{
+public class Product implements Visitable {
     @Column
     @NotNull
     private String name;
@@ -38,9 +39,15 @@ public class Product{
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "cart_product", joinColumns = @JoinColumn(name = "product_id"),
+    @JoinTable(name = "cart_product",
+            joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "cart_id"))
     @JsonIgnore
     private List<Cart> carts;
+    @Override
+    public void accept(ProductVisitor visitor) {
+        visitor.visit(this);
+    }
 }
